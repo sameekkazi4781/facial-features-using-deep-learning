@@ -1,0 +1,619 @@
+{% load static %}
+<!DOCTYPE html>
+<!-- saved from url=(0048)file:///F:/html/test%20folder/slider/slider.html -->  
+<html lang="en">
+
+<head>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-storage.js"></script>
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+  <script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyA5TdRXPDk3PSVWxBFv0WluIPHl6STyT84",
+    authDomain: "fyp-try-1224a.firebaseapp.com",
+    databaseURL: "https://fyp-try-1224a.firebaseio.com",
+    projectId: "fyp-try-1224a",
+    storageBucket: "fyp-try-1224a.appspot.com",
+    messagingSenderId: "773763228485",
+    appId: "1:773763228485:web:3276906a203920e004542c"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  </script>
+   <!-------------------------------------------------------------------------------------------------------------------------------------------------->
+  <link rel="stylesheet" href=" https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> 
+  <link rel="stylesheet" href=" https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js">
+  <link rel="stylesheet" href=" https://demo.tutorialzine.com/2013/05/mini-ajax-file-upload-form/assets/js/jquery.knob.js">
+  <link rel="stylesheet" href=" https://demo.tutorialzine.com/2013/05/mini-ajax-file-upload-form/assets/js/jquery.ui.widget.js">
+  <link rel="stylesheet" href=" https://demo.tutorialzine.com/2013/05/mini-ajax-file-upload-form/assets/js/jquery.iframe-transport.js">
+  <link rel="stylesheet" href=" https://demo.tutorialzine.com/2013/05/mini-ajax-file-upload-form/assets/js/jquery.fileupload.js">
+ 
+<style>
+
+html {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  font-family: 'Raleway', sans-serif;
+  transform: translateX(0%);
+  height: 100%;
+  width: 100%;
+  transition: transform 0.2s linear;
+  user-select:none;
+  -webkit-user-select:none;
+  -moz-user-select:none;
+  -o-user-select:none;
+}
+body.file-process-open {
+  transform: translateX(-30%);
+  transition: transform 0.2s linear;
+}
+
+* {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+}
+
+h1 {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 100;
+  letter-spacing: 0px;
+  font-size: 40px;
+  line-height: 1.2;
+}
+
+.header-container .page-center,
+.body-container .page-center,
+.footer-container .page-center {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 20px;
+  overflow: hidden;
+}
+.button i {
+    margin-right: 5px;
+}
+button {
+
+margin-right :15px }
+
+.header-container-wrapper {
+  flex: 0 0 auto;
+}
+.body-container-wrapper {
+  flex: 1 0 auto;
+}
+.footer-container-wrapper {
+  flex: 0 0 auto;
+}
+.body-container-wrapper .page-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: calc(100vh - 170px);
+}
+
+.navigation {
+  float: right;
+  width: 70%;
+}
+
+.navigation ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: block;
+  float: right;
+}
+
+.navigation ul li {
+  display: inline-block;
+}
+.button:hover {
+  color: #6e6e6e;
+  transform: translateY(-1px);
+  box-shadow: 0 7px 14px rgba(50, 50, 93, .1), 0 3px 6px rgba(0, 0, 0, .08);
+}
+
+.button:active {
+  color: #555;
+  background-color: #f6f9ff;
+  transform: translateY(1px);
+  box-shadow: 0 4px 6px rgba(50, 50, 93, .11), 0 1px 3px rgba(0, 0, 0, .08);
+}
+
+@media (max-width:700px) {
+  .custom-header-bg {
+    text-align: center;
+  }
+  .navigation ul{
+    float:none;
+    text-align:center;
+  }
+  .navigation ul li + li {
+    margin-top: 10px;
+  }
+  .navigation {
+    float: none;
+    width: 100%;
+  }
+}
+.navbar{
+      background-color:#343435 !important ;
+    }
+
+    .navbar .navbar-nav li a{
+      color: #FFF !important;
+    }
+
+    .navbar-text
+    {
+        font-size: 27px;
+        font-weight: 500;
+      color: white !important;
+      line-height: 1 !important;
+      font-family: "Gill Sans", sans-serif;;
+    }
+    
+    .navbar .navbar-nav .nav-link:hover{
+      color: yellow !important;
+    }
+    body {
+       padding-top: 56px;
+	   background-image:url('{%static "cv_app/images/maheen.jpg"%}');
+       
+      background-size: 100%;
+}
+  
+[tabindex="-1"]:focus:not(:focus-visible) {
+  outline: 0 !important;
+}
+
+hr {
+  box-sizing: content-box;
+  height: 0;
+  overflow: visible;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+
+figure {
+  margin: 0 0 1rem;
+}
+
+img {
+  vertical-align: middle;
+  border-style: none;
+}
+
+svg {
+  overflow: hidden;
+  vertical-align: middle;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+caption {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  color: #6c757d;
+  text-align: left;
+  caption-side: bottom;
+}
+
+th {
+  text-align: inherit;
+}
+
+label {
+  display: inline-block;
+  margin-bottom: 0.5rem;
+}
+tbody {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+[type="file"] {
+  height: 0;
+  overflow: hidden;
+  width: 0;
+}
+
+[type="file"] + label {
+  background: #5e5c5e;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: 'Rubik', sans-serif;
+  font-size: inherit;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  outline: none;
+  padding: 1rem 50px;
+  position: relative;
+  transition: all 0.3s;
+  vertical-align: middle;
+  
+  &:hover {
+    background-color: darken(#3d3b3d, 10%);
+  }
+  
+  &.btn-1 {
+    background-color: #3d3b3d;
+    box-shadow: 0 6px darken(#3d3b3d, 10%);
+    transition: none;
+
+    &:hover {
+      box-shadow: 0 4px darken(#3d3b3d, 10%);
+      top: 2px;
+    }
+  }
+</style>
+</head>
+
+
+
+
+<body>
+
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand"><img src="https://via.placeholder.com/150" class='ui image centered' id='img' width="90px" height="90px"></a>
+      <strong><span class="navbar-text" id="name"></span></strong>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="#">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Services</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Contact</a>
+          </li>
+          <li class="nav-item active">
+           <button id="Logout-button" type="button" class="btn btn-primary btn-block">Sign Out</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav> <br><br>
+
+  <!-- Page Content -->
+  <div class="container">
+    <!-- Heading Row -->
+    <div class="row align-items-center my-5">
+      <div class="col-lg-7">
+        {% if image_name != None %}
+        <img class="img-fluid rounded mb-4 mb-lg-0" src="/media/{{ image }}" alt="not jpg formate" height="200" width="200">
+		
+        <h4>Image prediction: {{ image_prediction }}</h4>
+        {% endif %}    
+	    {% if image_name == None   %}
+	 <h2 id="text"> </h2>
+	 
+	 {% endif %} 
+		</div>
+	  
+ <!-- /.col-lg-8 -->
+<div class="col-lg-5">
+  <h1 class="font-weight-light">Facial Feature Analysis Using Deep Learning</h1>
+  <p>Please upload your photo or take a photo using the camera!</p>
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="list-group">
+      
+      <!-- File upload button -->
+      <input name="image" type="file" id="file" onchange='chooseFile(event)' required style="display:none" />
+      <label for="file" class="btn btn-secondary" />Upload Image</label>
+
+      
+      <input class="list-group-item" type="text" name="name" placeholder="Write Name Of Your Image">
+    </div>
+    <br>
+    <button id="add-image" class="btn btn-primary" type="submit">Check Result</button>
+    <button id="show-results" type="button" class="btn btn-primary">Show History</button>
+    {% if image_name != None %}
+    <a href="{% url 'Recommendation'%}" >
+      <button type="button" class="btn btn-primary">Recommendation</button>
+    </a>
+    {% endif %}
+  </form>
+</div>
+
+
+        </form>
+            </div>
+      <!-- /.col-md-4 -->
+      <!-- This is used for history images display-->
+      <div class="page-center">     
+	    <table id="List">
+          <tbody>
+  
+          </tbody>
+      </table>
+      </div>
+
+    </div>
+	 
+	     {% if image_name != None %}
+    <!-- /.row -->
+<!-- Call to Action Well -->
+    <div class="card text-white bg-secondary my-5 py-2 text-center">
+      <div class="card-body">
+        <p class="text-white m-0">your results according to your upload are given below</p> 
+      </div>
+    </div>
+
+    <!-- Content Row -->
+    <div class="row">
+      <div class="col-md-4 mb-5">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="card-title">Face Recognize</h2>
+            <p class="card-text">{{result1}} % </p>
+          </div>
+        </div>
+      </div>
+      <!-- /.col-md-4 -->
+      <div class="col-md-4 mb-5">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="card-title">You are young!</h2>
+            <p class="card-text">{{result5}} % </p>
+          </div>
+        </div>
+      </div>
+      <!-- /.col-md-4 -->
+      <div class="col-md-4 mb-5">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="card-title">Almost no wrinkle :)</h2>
+            <p class="card-text">{{result2}} %</p>
+          </div>
+        </div>
+      </div>
+       <!-- /.col-md-4 -->
+      <div class="col-md-4 mb-5">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="card-title"> you need treatment</h2>
+            <p class="card-text">{{result4}} %</p>
+          </div>
+        </div>
+      </div>
+       <!-- /.col-md-4 -->
+      <div class="col-md-4 mb-5">
+        <div class="card h-100">
+          <div class="card-body">
+            <h2 class="card-title">Are you getting old?</h2>
+            <p class="card-text">{{result3}} %</p>
+          </div>
+        </div>
+      </div>
+      <!-- /.col-md-4 -->
+
+    </div>
+    <!-- /.row -->
+
+    <!-- Call to Action Well -->
+    <div class="card text-white bg-secondary my-5 py-4 text-center">
+      <div class="card-body">
+        <p class="text-white m-0">Do you want to save result?</p><br>
+
+        <button id="add-result" type="button" class="btn btn-primary click-upload">Save result</button> 
+
+      <script>
+      var res='{{result1}} %<br>{{result2}} %<br>{{result3}} %<br>{{result4}} %<br>{{result5}} % ';
+      var imageName='{{image}}'
+      </script>  
+      </div>
+    </div>
+            {% endif %} 
+  </div>
+  <!-- /.container -->
+
+  <!-- Footer -->
+  <footer class="py-5 bg-dark">
+    <div class="container">
+      <p class="m-0 text-center text-white">Copyright &copy; @ 2025 HSM GROUP</p>
+    </div>
+    <!-- /.container -->
+  </footer>
+
+ <script>
+
+$("#Logout-button").click(function(){
+    firebase.auth().signOut();
+    console.log("loged out");}
+);
+
+$("#show-results").click(function(){
+showResults();
+});
+
+$("#add-image").click(function(){
+addImage();
+});
+
+$("#add-result").click(function(){
+
+addResult();
+
+});
+
+
+//functions
+
+//save-result to DB
+function addResult(){
+let a=imageName;
+a=a.replace(".","");
+firebase.database().ref('results/' +  currentUser.uid + '/'+a).set({   
+    result:res
+  });
+  console.log(a);
+}
+
+let file = {};
+function chooseFile(e){
+file=e.target.files[0];
+}
+var nam=file.name;
+
+//fetching all images
+function showResults(){
+
+var storage = firebase.storage();
+var storageRef = storage.ref();
+$('#List').find('tbody').html('');
+var i=0;
+storageRef.child("users/"+ currentUser.uid + '/').listAll().then(function(result){
+result.items.forEach(function(imageRef){
+i++;
+
+let imgname=imageRef.toString();
+imgname=imgname.replace("gs://fyp-try-1224a.appspot.com/users/"+currentUser.uid+"/","");
+imgname=imgname.replace(".","");
+var per=currentUser.uid;
+console.log(currentUser.uid);
+firebase.database().ref('results/' +  per + '/'+imgname).once('value').then(function (snapshot) {
+        //here we will get data
+        //enter your field name
+        var result=snapshot.val().result;
+//   console.log(result);
+
+        //now we have data in variables
+        //now show them in our html
+       // document.getElementById("name").innerHTML=result;
+      displayImage(result,imageRef);
+    })
+
+
+ 
+//console.log("image refrence " + imgname);
+
+});
+
+});
+}
+function displayImage(row,images)
+{
+images.getDownloadURL().then(function(url){
+console.log("http url is" + url);
+let new_html = '';
+new_html+='<tr>';
+new_html+='<td>';
+new_html+=row;
+new_html+='</td>';
+new_html+='<td>';
+new_html+='<img src="'+url+'" width="100px" height="100px">';
+new_html+='</td>';
+new_html+='</tr>';
+$('#List').find('tbody').append(new_html); 
+});
+}
+
+//save image in DB
+function addImage()
+{let a='Image is Processing... ';
+document.getElementById('text').innerHTML=a;
+firebase.storage().ref("users/"+ currentUser.uid + '/'+file.name).put(file).then(function(  ){
+console.log("sucessfully uploaded")
+}).catch(error => {
+console.log(error.message); 
+});
+}
+
+//if user is logged in
+firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+    // User is signed in.
+    var email = user.email; 
+    img=document.getElementById("img");
+    currentUser=user;
+  firebase.storage().ref("users/"+ currentUser.uid +"/profile"+ '/profilee.jpg').getDownloadURL().then(imgURL => {
+  img.src=imgURL;
+  console.log(img.src);
+  }); 
+  var per=currentUser.uid;
+      firebase.database().ref('persons/'+per).once('value').then(function (snapshot) {
+ 
+        var name=snapshot.val().name;
+ 
+
+        //now we have data in variables
+        //now show them in our html
+        document.getElementById("name").innerHTML=name;
+
+    })
+  
+  console.log(currentUser.email + "HAS LOGED IN"+ currentUser.uid);
+  if(user == null){
+
+      window.location="signin.html";
+    }
+  
+  } 
+  else {
+  
+ window.location="http://127.0.0.1:8000";
+    // User is signed out.
+    // ...
+ }
+});
+  </script>
+
+  <!----------------------------------------------------------------------------------------------------------->
+
+</body>
+
+</html>

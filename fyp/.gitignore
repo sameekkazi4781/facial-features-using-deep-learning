@@ -1,0 +1,12 @@
+# Ignore the virtual environment
+virtualenv/
+
+# Ignore IDE related files
+.vscode/
+
+# Ignore byte compilation files
+__pycache__/
+*.py[cod]
+
+# Ignore pushing the entire database
+db.sqlite3
